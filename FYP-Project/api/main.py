@@ -6,6 +6,8 @@ from PIL import Image
 import tensorflow as tf
 
 MODEL = tf.keras.models.load_model("../models/1")
+CLASS_NAME = ["Early Blight", "Late Blight", "Healthy"]
+
 
 app = FastAPI()
 
@@ -27,7 +29,12 @@ async def predict(
     image = read_file_as_image(await file.read())
     img_batch = np.expand_dims(image, 0)
     prediction = MODEL.predict(img_batch)
-    pass
+    predicted_class = CLASS_NAME[np.argmax(prediction[0])]
+    confidence = np.max(prediction[0])
+    return {
+        "Class": predicted_class,
+        "Confidence":float(confidence)
+    }
 
 
 if __name__ == "__main__":
