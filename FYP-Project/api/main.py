@@ -1,21 +1,13 @@
-from fastapi import FastAPI, UploadFile, File
-import uvicorn
 import numpy as np
-from io import BytesIOsome
+from fastapi import FastAPI, File, UploadFile
+import uvicorn
+from io import BytesIO
 from PIL import Image
 import tensorflow as tf
 
-
-MODEL = tf.keras.models.load_model("../models/my_model.h5")
-CLASS_NAMES = ["Early Blight","Late Blight","Healthy"]
-
+MODEL = tf.keras.models.load_model("../models/1")
 
 app = FastAPI()
-
-
-@app.get("/ping")
-async def ping():
-    return "hello I'm Alive"
 
 
 def read_file_as_image(data) -> np.ndarray:
@@ -23,15 +15,20 @@ def read_file_as_image(data) -> np.ndarray:
     return image
 
 
+@app.get("/ping")
+async def ping():
+    return "hello"
+
+
 @app.post("/predict")
 async def predict(
         file: UploadFile = File(...)
 ):
     image = read_file_as_image(await file.read())
-    image_batch = np.expand_dims(image,0)
-    prediction = MODEL.predict(image_batch)
+    img_batch = np.expand_dims(image, 0)
+    prediction = MODEL.predict(img_batch)
     pass
 
 
 if __name__ == "__main__":
-    uvicorn.run(app=app, host="localhost", port=8000)
+    uvicorn.run(app, host="localhost", port=8000)
