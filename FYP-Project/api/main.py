@@ -10,7 +10,7 @@ import requests
 CLASS_NAME = ["Early Blight", "Late Blight", "Healthy"]
 
 app = FastAPI()
-end_point = "https://localhost:8501/v1/models/potatoes_model:predict"
+end_point = "https://localhost:8503/v1/models/email_model:predict"
 
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
