@@ -4,13 +4,13 @@ import uvicorn
 from io import BytesIO
 from PIL import Image
 import tensorflow as tf
+import requests
 
-MODEL = tf.keras.models.load_model("../models/1")
+# MODEL = tf.keras.models.load_model("../models/1")
 CLASS_NAME = ["Early Blight", "Late Blight", "Healthy"]
 
-
 app = FastAPI()
-
+end_point = "https://localhost:8501/v1/models/potatoes_model:predict"
 
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
@@ -28,13 +28,11 @@ async def predict(
 ):
     image = read_file_as_image(await file.read())
     img_batch = np.expand_dims(image, 0)
-    prediction = MODEL.predict(img_batch)
-    predicted_class = CLASS_NAME[np.argmax(prediction[0])]
-    confidence = np.max(prediction[0])
-    return {
-        "Class": predicted_class,
-        "Confidence":float(confidence)
+    json_data = {
+        "instances":img_batch.tolist()
     }
+    response = requests.post(end_point,json=json_data)
+    pass
 
 
 if __name__ == "__main__":
