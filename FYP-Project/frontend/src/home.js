@@ -14,6 +14,7 @@ import image from "./bg.png";
 import { DropzoneArea } from 'material-ui-dropzone';
 import { common } from '@material-ui/core/colors';
 import Clear from '@material-ui/icons/Clear';
+import axios from 'axios';
 
 
 
@@ -27,7 +28,7 @@ const ColorButton = withStyles((theme) => ({
     },
   },
 }))(Button);
-const axios = require("axios").default;
+//const axios = require("axios").default;
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -147,26 +148,31 @@ export const ImageUpload = () => {
   const classes = useStyles();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const [image, setImage] = useState(false);
   const [isLoading, setIsloading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   let confidence = 0;
 
   const sendFile = async () => {
-    if (image) {
+    if (image && !isSending) {
+      setIsSending(true); // Prevent further requests
       let formData = new FormData();
       formData.append("file", selectedFile);
-      let res = await axios({
-        method: "post",
-        url: process.env.REACT_APP_API_URL,
-        data: formData,
-      });
-      if (res.status === 200) {
-        setData(res.data);
+      try {
+        let res = await axios.post(process.env.REACT_APP_API_URL, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        if (res.status === 200) {
+          setData(res.data);
+        }
+      } catch (error) {
+        console.error('Error sending file:', error);
       }
-      setIsloading(false);
+      setIsSending(false); // Allow further requests
     }
   }
+  
 
   const clearData = () => {
     setData(null);
@@ -185,24 +191,30 @@ export const ImageUpload = () => {
   }, [selectedFile]);
 
   useEffect(() => {
-    if (!preview) {
-      return;
+    if (preview) {
+      setIsloading(true);
+      sendFile();
     }
-    setIsloading(true);
-    sendFile();
   }, [preview]);
+  
+  useEffect(() => {
+    if (data) {
+      console.log('Updated Data:', data); // Verify the data state
+    }
+  }, [data]);
 
   const onSelectFile = (files) => {
-    if (!files || files.length === 0) {
-      setSelectedFile(undefined);
+    if (files && files.length > 0) {
+      setSelectedFile(files[0]);
+      setImage(true);
+      setData(undefined);
+    } else {
+      setSelectedFile(null);
       setImage(false);
       setData(undefined);
-      return;
     }
-    setSelectedFile(files[0]);
-    setData(undefined);
-    setImage(true);
   };
+  
 
   if (data) {
     confidence = (parseFloat(data.confidence) * 100).toFixed(2);
@@ -213,7 +225,7 @@ export const ImageUpload = () => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            Madni's: Potato Disease Classification
+            CodeBasics: Potato Disease Classification
           </Typography>
           <div className={classes.grow} />
           <Avatar src={cblogo}></Avatar>
