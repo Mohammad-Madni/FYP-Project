@@ -31,7 +31,14 @@ async def predict(
         "instances":img_batch.tolist()
     }
     response = requests.post(end_point,json=json_data)
-    pass
+    prediction = np.array(response.json()["predictions"][0])
+    predicted_class = CLASS_NAME[np.argmax(prediction)]
+    confidence = np.max(prediction)
+
+    return {
+        "Class": predicted_class,
+        "Confidence": float(confidence)
+    }
 
 
 if __name__ == "__main__":
