@@ -6,11 +6,10 @@ from PIL import Image
 import tensorflow as tf
 import requests
 
-# MODEL = tf.keras.models.load_model("../models/1")
 CLASS_NAME = ["Early Blight", "Late Blight", "Healthy"]
 
 app = FastAPI()
-end_point = "https://localhost:8503/v1/models/email_model:predict"
+end_point = "http://localhost:8501/v1/models/FYP-Project:predict"
 
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
