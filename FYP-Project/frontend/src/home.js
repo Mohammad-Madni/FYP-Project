@@ -199,7 +199,7 @@ export const ImageUpload = () => {
   
   useEffect(() => {
     if (data) {
-      console.log('Updated Data:', data); // Verify the data state
+      console.log('Updated Data:', data); //To check wheather data is recieved by backend or not 
     }
   }, [data]);
 
@@ -217,7 +217,7 @@ export const ImageUpload = () => {
   
 
   if (data) {
-    confidence = (parseFloat(data.confidence) * 100).toFixed(2);
+    confidence = (parseFloat(data["Confidence"]) * 100).toFixed(2);
   }
 
   return (
@@ -225,7 +225,7 @@ export const ImageUpload = () => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            CodeBasics: Potato Disease Classification
+            Madni's: Potato Disease Classification
           </Typography>
           <div className={classes.grow} />
           <Avatar src={cblogo}></Avatar>
@@ -270,7 +270,7 @@ export const ImageUpload = () => {
                     <TableBody className={classes.tableBody}>
                       <TableRow className={classes.tableRow}>
                         <TableCell component="th" scope="row" className={classes.tableCell}>
-                          {data.class}
+                          {data["Class"]}
                         </TableCell>
                         <TableCell align="right" className={classes.tableCell}>{confidence}%</TableCell>
                       </TableRow>
