@@ -8,6 +8,7 @@ import requests
 
 CLASS_NAME = ["Early Blight", "Late Blight", "Healthy",]
 
+
 app = FastAPI()
 
 origins = [
