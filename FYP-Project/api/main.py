@@ -6,7 +6,7 @@ from io import BytesIO
 from PIL import Image
 import requests
 
-CLASS_NAME = ["Early Blight", "Late Blight", "Healthy",]
+CLASS_NAME = ["Cordana", "Healthy", "Panama Disease", "Yellow and Black Sigatoka"]
 
 
 app = FastAPI()
