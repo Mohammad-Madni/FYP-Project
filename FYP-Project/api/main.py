@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 
-end_point = "http://localhost:8501/v1/models/FYP-Project:predict"
+end_point = "http://localhost:8502/v1/models/FYP-Project:predict"
 
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
