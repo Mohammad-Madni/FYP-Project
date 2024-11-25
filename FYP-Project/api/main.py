@@ -6,9 +6,25 @@ from io import BytesIO
 from PIL import Image
 import requests
 
-CLASS_NAME = ["Cordana", "Healthy", "Panama Disease", "Yellow and Black Sigatoka"]
+# Disease class names per plant type
+CLASS_NAME = ["Rice", "Cotton", "Sugarcane", "Wheat", "Banana", "Mango"]
+DISEASE_CLASSES_RICE = ["Healthy", "Bacterial Leaf Blight", "Brown Spot", "Leaf Blast", "Leaf Scald", ""]
+DISEASE_CLASSES_COTTON = ["Healthy", "Alphids", "Army worm", "Bacterial blight", "Powdery mildew", "Target spot"]
+DISEASE_CLASSES_SUGARCANE = ["Healthy", "Top Shoot Borer", "Red Rot"]
+DISEASE_CLASSES_WHEAT = ["Healthy", "Rust", "Fusarium Head Blight"]
+DISEASE_CLASSES_BANANA = ["Healthy", "Yellow and Black Sigatoka", "Panama Disease", "Cordana"]
+DISEASE_CLASSES_MANGO = ["Healthy", "Anthracnose", "Powdery Mildew", "Sooty Mould", "Bacterial Canker", "Cutting Weevil", "Die Back", "Gall Midge"]
 
+DISEASE_CLASSES = {
+    "Rice": DISEASE_CLASSES_RICE,
+    "Cotton": DISEASE_CLASSES_COTTON,
+    "Sugarcane": DISEASE_CLASSES_SUGARCANE,
+    "Wheat": DISEASE_CLASSES_WHEAT,
+    "Banana": DISEASE_CLASSES_BANANA,
+    "Mango": DISEASE_CLASSES_MANGO,
+}
 
+# FastAPI app
 app = FastAPI()
 
 origins = [
@@ -23,39 +39,75 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Endpoints for models
+end_point_leaf_classifier = "http://localhost:8501/v1/models/leaf_classifier_model:predict"
+end_point_rice = "http://localhost:8501/v1/models/rice_model:predict"
+end_point_cotton = "http://localhost:8501/v1/models/cotton_model:predict"
+end_point_sugarcane = "http://localhost:8501/v1/models/sugarcane_model:predict"
+end_point_wheat = "http://localhost:8501/v1/models/wheat_model:predict"
+end_point_banana = "http://localhost:8501/v1/models/banana_model:predict"
+end_point_mango = "http://localhost:8501/v1/models/mango_model:predict"
 
-end_point = "http://localhost:8501/v1/models/banana_model:predict"
-
+# Read image
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
     return image
 
-
+# Ping route for testing
 @app.get("/ping")
 async def ping():
     return "hello"
 
-
+# Predict route
 @app.post("/predict")
-async def predict(
-        file: UploadFile = File(...)
-):
+async def predict(file: UploadFile = File(...)):
+    # Read and preprocess image
     image = read_file_as_image(await file.read())
     img_batch = np.expand_dims(image, 0)
-    json_data = {
-        "instances":img_batch.tolist()
-    }
-    response = requests.post(end_point,json=json_data)
+    json_data = {"instances": img_batch.tolist()}
+
+    # Step 1: Predict plant type using leaf classifier
+    response = requests.post(end_point_leaf_classifier, json=json_data)
+    leaf_prediction = np.array(response.json()["predictions"][0])
+    predicted_leaf_class = CLASS_NAME[np.argmax(leaf_prediction)]
+
+    # Check for unrecognized leaf class
+    if predicted_leaf_class not in CLASS_NAME:
+        return {"error": "Leaf type not recognized"}
+
+    # Step 2: Predict disease for detected plant
+    if predicted_leaf_class == "Rice":
+        endpoint = end_point_rice
+        disease_classes = DISEASE_CLASSES_RICE
+    elif predicted_leaf_class == "Cotton":
+        endpoint = end_point_cotton
+        disease_classes = DISEASE_CLASSES_COTTON
+    elif predicted_leaf_class == "Sugarcane":
+        endpoint = end_point_sugarcane
+        disease_classes = DISEASE_CLASSES_SUGARCANE
+    elif predicted_leaf_class == "Wheat":
+        endpoint = end_point_wheat
+        disease_classes = DISEASE_CLASSES_WHEAT
+    elif predicted_leaf_class == "Banana":
+        endpoint = end_point_banana
+        disease_classes = DISEASE_CLASSES_BANANA
+    elif predicted_leaf_class == "Mango":
+        endpoint = end_point_mango
+        disease_classes = DISEASE_CLASSES_MANGO
+
+    # Send image to plant model for disease detection
+    response = requests.post(endpoint, json=json_data)
     prediction = np.array(response.json()["predictions"][0])
-    predicted_class = CLASS_NAME[np.argmax(prediction)]
+    predicted_class = disease_classes[np.argmax(prediction)]
     confidence = np.max(prediction)
 
+    # Return response with plant type, disease, and confidence
     return {
-        "Class": predicted_class,
+        "Plant Type": predicted_leaf_class,
+        "Disease": predicted_class,
         "Confidence": float(confidence)
     }
 
-
-
+# Run FastAPI app
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
