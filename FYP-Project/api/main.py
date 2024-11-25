@@ -8,9 +8,9 @@ import requests
 
 # Disease class names per plant type
 CLASS_NAME = ["Rice", "Cotton", "Sugarcane", "Wheat", "Banana", "Mango"]
-DISEASE_CLASSES_RICE = ["Healthy", "Bacterial Leaf Blight", "Brown Spot", "Leaf Blast", "Leaf Scald", ""]
+DISEASE_CLASSES_RICE = ["Healthy", "Bacterial Leaf Blight", "Brown Spot", "Leaf Blast", "Leaf Scald", "Narrow Brown Spot", "Neck Blast", "Rice Hispa", "Sheath Blight", "Tungro"]
 DISEASE_CLASSES_COTTON = ["Healthy", "Alphids", "Army worm", "Bacterial blight", "Powdery mildew", "Target spot"]
-DISEASE_CLASSES_SUGARCANE = ["Healthy", "Top Shoot Borer", "Red Rot"]
+DISEASE_CLASSES_SUGARCANE = ["Healthy", "Banded Chlorosis", "Brown Spot", "Brown Rust", "Dried Leaves", "Grassy Shoot", ]
 DISEASE_CLASSES_WHEAT = ["Healthy", "Rust", "Fusarium Head Blight"]
 DISEASE_CLASSES_BANANA = ["Healthy", "Yellow and Black Sigatoka", "Panama Disease", "Cordana"]
 DISEASE_CLASSES_MANGO = ["Healthy", "Anthracnose", "Powdery Mildew", "Sooty Mould", "Bacterial Canker", "Cutting Weevil", "Die Back", "Gall Midge"]
