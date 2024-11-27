@@ -7,13 +7,13 @@ from PIL import Image
 import requests
 
 # Disease class names per plant type
-CLASS_NAME = ["Rice", "Cotton", "Sugarcane", "Wheat", "Banana", "Mango"]
-DISEASE_CLASSES_RICE = ["Healthy", "Bacterial Leaf Blight", "Brown Spot", "Leaf Blast", "Leaf Scald", "Narrow Brown Spot", "Neck Blast", "Rice Hispa", "Sheath Blight", "Tungro"]
-DISEASE_CLASSES_COTTON = ["Healthy", "Alphids", "Army worm", "Bacterial blight", "Powdery mildew", "Target spot"]
-DISEASE_CLASSES_SUGARCANE = ["Healthy Leaves", "Banded Chlorosis", "Brown Spot", "Brown Rust", "Dried Leaves", "Grassy Shoot", "Pokkah Boeng", "Sett Rot", "Smut", "Viral Disease", "Yellow Leaf"]
-DISEASE_CLASSES_WHEAT = ["Healthy", "Stripe Rust", "Septoria"]
-DISEASE_CLASSES_BANANA = ["Healthy", "Yellow and Black Sigatoka", "Panama Disease", "Cordana"]
-DISEASE_CLASSES_MANGO = ["Healthy", "Anthracnose", "Powdery Mildew", "Sooty Mould", "Bacterial Canker", "Cutting Weevil", "Die Back", "Gall Midge"]
+CLASS_NAME = ["Banana", "Cotton", "Mango", "Rice", "Sugarcane", "Wheat"]
+DISEASE_CLASSES_RICE = ["Bacterial Leaf Blight", "Brown Spot", "Healthy", "Leaf Blast", "Leaf Scald", "Narrow Brown Spot", "Neck Blast", "Rice Hispa", "Sheath Blight", "Tungro"]
+DISEASE_CLASSES_COTTON = ["Alphids", "Army worm", "Bacterial blight", "Healthy", "Powdery mildew", "Target spot"]
+DISEASE_CLASSES_SUGARCANE = ["Banded Chlorosis", "Brown Spot", "Brown Rust", "Dried Leaves", "Grassy Shoot", "Healthy Leaves", "Pokkah Boeng", "Sett Rot", "Smut", "Viral Disease", "Yellow Leaf"]
+DISEASE_CLASSES_WHEAT = ["Healthy", "Septoria", "Stripe Rust"]
+DISEASE_CLASSES_BANANA = [ "Cordana", "Healthy", "Panama Disease", "Yellow and Black Sigatoka"]
+DISEASE_CLASSES_MANGO = ["Anthracnose", "Bacterial Canker", "Cutting Weevil","Die Back", "Gall Midge", "Healthy", "Powdery Mildew", "Sooty Mould",]
 
 DISEASE_CLASSES = {
     "Rice": DISEASE_CLASSES_RICE,
@@ -100,6 +100,7 @@ async def predict(file: UploadFile = File(...)):
     prediction = np.array(response.json()["predictions"][0])
     predicted_class = disease_classes[np.argmax(prediction)]
     confidence = np.max(prediction)
+    print(predicted_leaf_class)
 
     # Return response with plant type, disease, and confidence
     return {
@@ -107,6 +108,7 @@ async def predict(file: UploadFile = File(...)):
         "Class": predicted_class,
         "Confidence": float(confidence)
     }
+
 
 # Run FastAPI app
 if __name__ == "__main__":
