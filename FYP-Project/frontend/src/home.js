@@ -271,7 +271,10 @@ export const ImageUpload = () => {
                     <TableBody className={classes.tableBody}>
                       <TableRow className={classes.tableRow}>
                         <TableCell component="th" scope="row" className={classes.tableCell}>
-                          {data["Class"]}
+                          {data["Plant Type"]}
+                        </TableCell>
+                        <TableCell component="th" scope="row" className={classes.tableCell}>
+                          {data["Disease"]}
                         </TableCell>
                         <TableCell align="right" className={classes.tableCell}>{confidence}%</TableCell>
                       </TableRow>
