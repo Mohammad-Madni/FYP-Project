@@ -274,7 +274,7 @@ export const ImageUpload = () => {
                           {data["Plant Type"]}
                         </TableCell>
                         <TableCell component="th" scope="row" className={classes.tableCell}>
-                          {data["Disease"]}
+                          {data["Class"]}
                         </TableCell>
                         <TableCell align="right" className={classes.tableCell}>{confidence}%</TableCell>
                       </TableRow>
