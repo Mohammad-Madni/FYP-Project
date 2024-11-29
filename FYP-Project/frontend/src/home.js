@@ -155,6 +155,7 @@ export const ImageUpload = () => {
   const sendFile = async () => {
     if (image && !isSending) {
       setIsSending(true); // Prevent further requests
+      setIsloading(true); // Start loading
       let formData = new FormData();
       formData.append("file", selectedFile);
       try {
@@ -162,14 +163,16 @@ export const ImageUpload = () => {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         if (res.status === 200) {
-          setData(res.data);
+          setData(res.data); // Update data with the response
         }
       } catch (error) {
         console.error('Error sending file:', error);
+      } finally {
+        setIsSending(false); // Allow further requests
+        setIsloading(false); // Stop loading once complete
       }
-      setIsSending(false); // Allow further requests
     }
-  }
+  };
   
 
   const clearData = () => {
@@ -291,7 +294,7 @@ export const ImageUpload = () => {
           {data &&
             <Grid item className={classes.buttonGrid} >
 
-              <ColorButton variant="contained" className={classes.clearButton} color="primary" component="span" size="large" onClick={clearData} startIcon={<Clear fontSize="large" />} style={{ position: 'relative', zIndex: 1 }}>
+              <ColorButton variant="contained" className={classes.clearButton} color="primary" component="span" size="large" onClick={clearData} startIcon={<Clear fontSize="large" />}>
                 Clear
               </ColorButton>
             </Grid>}
