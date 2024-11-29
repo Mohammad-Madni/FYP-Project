@@ -89,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   tableContainer: {
-    backgroundColor: 'transparent !important',
-    boxShadow: 'none !important',
+    marginBottom: theme.spacing(2), // Add spacing below the table
+    wordWrap: 'break-word', // Ensure long text wraps
   },
   table: {
     backgroundColor: 'transparent !important',
@@ -102,12 +102,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent !important',
   },
   tableCell: {
-    fontSize: '22px',
-    backgroundColor: 'transparent !important',
-    borderColor: 'transparent !important',
-    color: '#000000a6 !important',
-    fontWeight: 'bolder',
-    padding: '1px 24px 1px 16px',
+    fontSize: '16px',
+    color: '#000',
+    fontWeight: 500,
+    whiteSpace: 'normal', // Allow text to wrap
+    wordBreak: 'break-word', // Break long words
   },
   tableCell1: {
     fontSize: '14px',
@@ -131,7 +130,6 @@ const useStyles = makeStyles((theme) => ({
   detail: {
     backgroundColor: 'white',
     display: 'flex',
-    justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -293,7 +291,7 @@ export const ImageUpload = () => {
           {data &&
             <Grid item className={classes.buttonGrid} >
 
-              <ColorButton variant="contained" className={classes.clearButton} color="primary" component="span" size="large" onClick={clearData} startIcon={<Clear fontSize="large" />}>
+              <ColorButton variant="contained" className={classes.clearButton} color="primary" component="span" size="large" onClick={clearData} startIcon={<Clear fontSize="large" />} style={{ position: 'relative', zIndex: 1 }}>
                 Clear
               </ColorButton>
             </Grid>}
