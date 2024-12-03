@@ -227,7 +227,7 @@ export const ImageUpload = () => {
         <Toolbar>
           <Avatar src={cblogo}></Avatar>
           <Typography className={classes.title} variant="h6" noWrap>
-            Agriculture Disease Detection
+            Agriculture Disease Detection System
           </Typography>
           <div className={classes.grow} />
         </Toolbar>
