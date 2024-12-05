@@ -100,7 +100,6 @@ async def predict(file: UploadFile = File(...)):
     predicted_class = disease_classes[np.argmax(prediction)]
     confidence = np.max(prediction)
 
-    # Return response with plant type, disease, and confidence
     return {
         "Plant Type": predicted_leaf_class,
         "Class": predicted_class,
