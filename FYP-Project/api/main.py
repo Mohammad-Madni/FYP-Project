@@ -107,6 +107,5 @@ async def predict(file: UploadFile = File(...)):
     }
 
 
-# Run FastAPI app
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
