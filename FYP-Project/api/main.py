@@ -95,7 +95,6 @@ async def predict(file: UploadFile = File(...)):
         endpoint = end_point_mango
         disease_classes = DISEASE_CLASSES_MANGO
 
-    # Send image to plant model for disease detection
     response = requests.post(endpoint, json=json_data)
     prediction = np.array(response.json()["predictions"][0])
     predicted_class = disease_classes[np.argmax(prediction)]
