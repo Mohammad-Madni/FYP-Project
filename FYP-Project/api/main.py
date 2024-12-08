@@ -24,7 +24,6 @@ DISEASE_CLASSES = {
     "Mango": DISEASE_CLASSES_MANGO,
 }
 
-# FastAPI app
 app = FastAPI()
 
 origins = [
