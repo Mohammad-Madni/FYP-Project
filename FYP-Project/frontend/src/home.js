@@ -89,9 +89,8 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   tableContainer: {
-    marginBottom: theme.spacing(2), // Add spacing below the table
-    wordWrap: 'break-word', // Ensure long text wraps
-  },
+    marginBottom: theme.spacing(2), 
+    wordWrap: 'break-word', 
   table: {
     backgroundColor: 'transparent !important',
   },
