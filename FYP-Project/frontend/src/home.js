@@ -104,8 +104,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     color: '#000',
     fontWeight: 500,
-    whiteSpace: 'normal', // Allow text to wrap
-    wordBreak: 'break-word', // Break long words
+    whiteSpace: 'normal',
+    wordBreak: 'break-word',
   },
   tableCell1: {
     fontSize: '14px',
