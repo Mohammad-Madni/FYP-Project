@@ -167,8 +167,8 @@ export const ImageUpload = () => {
       } catch (error) {
         console.error('Error sending file:', error);
       } finally {
-        setIsSending(false); // Allow further requests
-        setIsloading(false); // Stop loading once complete
+        setIsSending(false);
+        setIsloading(false);
       }
     }
   };
