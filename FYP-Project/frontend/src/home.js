@@ -199,7 +199,7 @@ export const ImageUpload = () => {
   
   useEffect(() => {
     if (data) {
-      console.log('Updated Data:', data); //To check wheather data is recieved by backend or not 
+      console.log('Updated Data:', data);
     }
   }, [data]);
 
