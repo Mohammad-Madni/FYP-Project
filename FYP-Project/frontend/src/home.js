@@ -162,7 +162,7 @@ export const ImageUpload = () => {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         if (res.status === 200) {
-          setData(res.data); // Update data with the response
+          setData(res.data); 
         }
       } catch (error) {
         console.error('Error sending file:', error);
