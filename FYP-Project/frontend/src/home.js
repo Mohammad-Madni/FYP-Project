@@ -28,7 +28,6 @@ const ColorButton = withStyles((theme) => ({
     },
   },
 }))(Button);
-//const axios = require("axios").default;
 
 const useStyles = makeStyles((theme) => ({
   grow: {
