@@ -153,7 +153,7 @@ export const ImageUpload = () => {
   const sendFile = async () => {
     if (image && !isSending) {
       setIsSending(true); // Prevent further requests
-      setIsloading(true); // Start loading
+      setIsloading(true); 
       let formData = new FormData();
       formData.append("file", selectedFile);
       try {
