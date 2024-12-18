@@ -70,11 +70,9 @@ async def predict(file: UploadFile = File(...)):
     leaf_prediction = np.array(response.json()["predictions"][0])
     predicted_leaf_class = CLASS_NAME[np.argmax(leaf_prediction)]
 
-    # Check for unrecognized leaf class
     if predicted_leaf_class not in CLASS_NAME:
         return {"error": "Leaf type not recognized"}
 
-    # Step 2: Predict disease for detected plant
     if predicted_leaf_class == "Rice":
         endpoint = end_point_rice
         disease_classes = DISEASE_CLASSES_RICE
