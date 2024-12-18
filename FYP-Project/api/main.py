@@ -47,7 +47,7 @@ end_point_wheat = "http://localhost:8501/v1/models/wheat_model:predict"
 end_point_banana = "http://localhost:8501/v1/models/banana_model:predict"
 end_point_mango = "http://localhost:8501/v1/models/mango_model:predict"
 
-# Read image
+# For Reading the image
 def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
     return image
