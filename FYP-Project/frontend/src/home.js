@@ -88,8 +88,9 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   tableContainer: {
-    marginBottom: theme.spacing(2), 
-    wordWrap: 'break-word', 
+    marginBottom: theme.spacing(2),
+    wordWrap: 'break-word',
+  },
   table: {
     backgroundColor: 'transparent !important',
   },
@@ -134,12 +135,13 @@ const useStyles = makeStyles((theme) => ({
   appbar: {
     background: '#be6a77',
     boxShadow: 'none',
-    color: 'white'
+    color: 'white',
   },
   loader: {
     color: '#be6a77 !important',
-  }
+  },
 }));
+
 export const ImageUpload = () => {
   const classes = useStyles();
   const [selectedFile, setSelectedFile] = useState();

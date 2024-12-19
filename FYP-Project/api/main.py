@@ -60,7 +60,7 @@ async def ping():
 # Predict route
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    # Read and preprocess image
+    
     image = read_file_as_image(await file.read())
     img_batch = np.expand_dims(image, 0)
     json_data = {"instances": img_batch.tolist()}
