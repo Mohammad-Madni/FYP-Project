@@ -39,7 +39,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Endpoints for models
+# Endpoints of models
 end_point_leaf_classifier = "http://localhost:8501/v1/models/leaf_classifier_model:predict"
 end_point_rice = "http://localhost:8501/v1/models/rice_model:predict"
 end_point_cotton = "http://localhost:8501/v1/models/cotton_model:predict"
