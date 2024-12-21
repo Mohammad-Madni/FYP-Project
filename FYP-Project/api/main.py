@@ -66,7 +66,7 @@ async def predict(file: UploadFile = File(...)):
     img_batch = np.expand_dims(image, 0)
     json_data = {"instances": img_batch.tolist()}
 
-    # Step 1: Predict plant type using leaf classifier
+    # Predicting plant type using leaf classifier model
     response = requests.post(end_point_leaf_classifier, json=json_data)
     leaf_prediction = np.array(response.json()["predictions"][0])
     predicted_leaf_class = CLASS_NAME[np.argmax(leaf_prediction)]
