@@ -53,7 +53,7 @@ def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
     return image
 
-# Ping route for testing purpose
+# Ping for testing purpose
 @app.get("/ping")
 async def ping():
     return "hello"
