@@ -6,7 +6,7 @@ from io import BytesIO
 from PIL import Image
 import requests
 
-# Disease class names per plant type
+# class names for each model
 CLASS_NAME = ["Banana", "Cotton", "Mango", "Rice", "Sugarcane", "Wheat"]
 DISEASE_CLASSES_RICE = ["Bacterial Leaf Blight", "Brown Spot", "Healthy", "Leaf Blast", "Leaf Scald", "Narrow Brown Spot", "Neck Blast", "Rice Hispa", "Sheath Blight", "Tungro"]
 DISEASE_CLASSES_COTTON = ["Alphids", "Army worm", "Bacterial blight", "Healthy", "Powdery mildew", "Target spot"]
