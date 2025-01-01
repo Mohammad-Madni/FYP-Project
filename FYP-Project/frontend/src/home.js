@@ -215,6 +215,8 @@ export const ImageUpload = () => {
       setData(undefined);
     }
   };
+  
+
   if (data) {
     confidence = (parseFloat(data["Confidence"]) * 100).toFixed(2);
   }
