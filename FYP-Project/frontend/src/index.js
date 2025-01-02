@@ -11,5 +11,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-//If you want to run measuring performance in your app, pass a method.
+//If you want to run measuring performance in your app, pass the method.
 reportWebVitals();
