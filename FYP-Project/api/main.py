@@ -58,7 +58,7 @@ def read_file_as_image(data) -> np.ndarray:
 async def ping():
     return "hello"
 
-# Predict route
+# Predict route.
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     
